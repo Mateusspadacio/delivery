@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import com.coderef.delivery.client.PaymentClient;
 import com.coderef.delivery.model.Order;
 import com.coderef.delivery.repository.OrderRepository;
 
@@ -15,9 +14,6 @@ public class OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
-
-    @Autowired
-    private PaymentClient paymentClient;
 
     public Order save(@Validated Order order) {
         order.setCode( UUID.randomUUID().toString() );
@@ -36,8 +32,4 @@ public class OrderService {
         orderRepository.delete(id);
     }
 
-    public String checkStatus(Integer id){
-        Order order = orderRepository.findOne( id );
-        return paymentClient.checkStatus( order.getCode() );
-    }
 }
